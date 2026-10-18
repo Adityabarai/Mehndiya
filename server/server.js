@@ -23,34 +23,45 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use('/api/auth', authRouter);
-app.use('/api/artists', artistsRouter);
-app.use('/api/appointments', appointmentsRouter);
-app.use('/api/artist/appointments', artistAppointmentsRouter);
-app.use('/api/admin', adminRouter);
-app.use('/api/designs', designsRouter);
-app.use('/api/reviews', reviewsRouter);
-app.use('/api/notifications', notificationsRouter);
-app.use('/api/services', servicesRouter);
-app.use('/api/bookings', bookingsRouter);
+// Routes (supporting both /api/* and direct /* paths for cloud serverless compatibility)
+const routes = [
+  ['/auth', authRouter],
+  ['/artists', artistsRouter],
+  ['/appointments', appointmentsRouter],
+  ['/artist/appointments', artistAppointmentsRouter],
+  ['/admin', adminRouter],
+  ['/designs', designsRouter],
+  ['/reviews', reviewsRouter],
+  ['/notifications', notificationsRouter],
+  ['/services', servicesRouter],
+  ['/bookings', bookingsRouter]
+];
+
+routes.forEach(([routePath, router]) => {
+  app.use(`/api${routePath}`, router);
+  app.use(routePath, router);
+});
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+const healthHandler = (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'Mehndi Appointment Booking Platform API',
     supabaseConnected: isUsingSupabase()
   });
-});
+};
+app.get('/api/health', healthHandler);
+app.get('/health', healthHandler);
 
-app.listen(PORT, () => {
-  console.log(`===============================================`);
-  console.log(`🌸 Mehndi Platform API Server is running`);
-  console.log(`📍 URL: http://localhost:${PORT}`);
-  console.log(`✨ Role Panels Ready: Customer, Artist, Admin`);
-  console.log(`===============================================`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`===============================================`);
+    console.log(`🌸 Mehndi Platform API Server is running`);
+    console.log(`📍 URL: http://localhost:${PORT}`);
+    console.log(`✨ Role Panels Ready: Customer, Artist, Admin`);
+    console.log(`===============================================`);
+  });
+}
 
 export default app;
