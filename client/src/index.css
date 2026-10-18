@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Mehndi Platform Color System */
+  --bg-cream: #FAF7F2;
+  --bg-ivory: #FFFDF9;
+  --bg-warm: #F4EFE6;
+  
+  --deep-green: #143823;
+  --deep-green-dark: #0F2317;
+  --deep-green-light: #1C4B30;
+
+  --henna-brown: #4A2311;
+  --henna-warm: #61331D;
+  --henna-terracotta: #8C4325;
+
+  --gold-muted: #D4AF37;
+  --gold-light: #F3E5AB;
+  --gold-dark: #8C6D38;
+  --gold-sand: #E8DFC8;
+
+  --charcoal: #2D2A26;
+  --charcoal-muted: #5C554E;
+  --border-cream: #E8DFC8;
+
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--bg-cream);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--charcoal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #143823;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Utility Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Utility Hide Scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Tailwind utility fallbacks / standard classes */
+.ring-gold {
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.5);
+}
+
+.shadow-gold {
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
+}
+
+/* Table styling */
+table {
+  border-collapse: collapse;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
