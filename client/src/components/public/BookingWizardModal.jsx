@@ -14,14 +14,16 @@ import {
   AlertCircle,
   FileText,
   Image,
-  Upload
+  Upload,
+  Lock,
+  LogIn
 } from 'lucide-react';
 import Modal from '../common/Modal';
 import { api } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 
-export default function BookingWizardModal({ isOpen, onClose, preselectedService, preselectedArtist, initialParams }) {
+export default function BookingWizardModal({ isOpen, onClose, preselectedService, preselectedArtist, initialParams, onNavigate }) {
   const { user } = useAuth();
   const { toastSuccess, toastError, toastInfo } = useToast();
 
@@ -173,6 +175,13 @@ export default function BookingWizardModal({ isOpen, onClose, preselectedService
   };
 
   const handleSubmitBooking = async () => {
+    if (!user) {
+      toastInfo('Please sign in or create an account to send your booking request.');
+      onClose();
+      if (onNavigate) onNavigate('login');
+      return;
+    }
+
     setSubmitting(true);
     setConflictError('');
 
@@ -615,9 +624,44 @@ export default function BookingWizardModal({ isOpen, onClose, preselectedService
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs">
-              ℹ️ <strong>Workflow Reminder:</strong> This booking request will initially be <strong>PENDING</strong>. Your artist will review and accept it to become <strong>CONFIRMED</strong>. You will receive an instant in-app notification.
-            </div>
+            {!user ? (
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 space-y-2.5">
+                <div className="flex items-center gap-2 font-bold text-xs text-amber-900">
+                  <Lock className="w-4 h-4 text-amber-700 shrink-0" />
+                  <span>Sign In Required to Send Booking Request</span>
+                </div>
+                <p className="text-xs text-amber-800 leading-relaxed">
+                  You are currently browsing as a guest. You can review all service details, selected artist, and pricing, but sending an official appointment request requires logging in.
+                </p>
+                <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      if (onNavigate) onNavigate("login");
+                    }}
+                    className="px-4 py-2 bg-[#143823] text-[#F3E5AB] rounded-xl text-xs font-bold hover:bg-[#1C4B30] transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+                  >
+                    <LogIn className="w-3.5 h-3.5" />
+                    <span>Sign In to Continue</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      if (onNavigate) onNavigate("register");
+                    }}
+                    className="px-3.5 py-2 text-xs font-bold text-[#143823] hover:underline cursor-pointer"
+                  >
+                    New user? Create an Account
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs">
+                ✨ <strong>Workflow Reminder:</strong> This booking request will initially be <strong>PENDING</strong>. Your artist will review and accept it to become <strong>CONFIRMED</strong>. You will receive an instant in-app notification.
+              </div>
+            )}
           </div>
         )}
 
@@ -643,12 +687,24 @@ export default function BookingWizardModal({ isOpen, onClose, preselectedService
               <span>Continue</span>
               <ChevronRight className="w-4 h-4" />
             </button>
+          ) : !user ? (
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                if (onNavigate) onNavigate('login');
+              }}
+              className="px-6 py-3 rounded-xl bg-[#143823] hover:bg-[#1C4B30] text-[#F3E5AB] text-xs font-bold shadow-xl shadow-[#143823]/25 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Lock className="w-4 h-4 text-[#D4AF37]" />
+              <span>Sign In to Send Request</span>
+            </button>
           ) : (
             <button
               type="button"
               disabled={submitting}
               onClick={handleSubmitBooking}
-              className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#143823] via-[#1C4B30] to-[#143823] text-[#F3E5AB] text-xs font-bold shadow-xl shadow-[#143823]/25 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#143823] via-[#1C4B30] to-[#143823] text-[#F3E5AB] text-xs font-bold shadow-xl shadow-[#143823]/25 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-[#D4AF37]" />
               <span>{submitting ? 'Submitting...' : 'Send Booking Request'}</span>

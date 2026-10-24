@@ -42,7 +42,7 @@ export default function Footer({ onOpenBooking }) {
               alignItems: 'center',
               gap: '0.4rem'
             }}>
-              Mehndi with Ayushi
+              mehndiya
               <Sparkles size={16} color="var(--color-gold)" />
             </div>
 
@@ -163,7 +163,7 @@ export default function Footer({ onOpenBooking }) {
           color: '#b0a09e'
         }}>
           <div>
-            © {new Date().getFullYear()} Mehndi with Ayushi. All rights reserved.
+            © {new Date().getFullYear()} mehndiya. All rights reserved.
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             Handcrafted with <Heart size={14} color="var(--color-gold)" fill="var(--color-gold)" /> for brides worldwide.

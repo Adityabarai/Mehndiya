@@ -25,7 +25,7 @@ export default function ContactPage({ onOpenBooking }) {
             <span>Concierge Support</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#143823] tracking-tight">
-            Contact Mehndi with Ayushi
+            Contact mehndiya
           </h1>
           <p className="text-sm text-[#6B645C]">
             Have inquiries regarding bridal dates, customized couple portraits, or booking our team for your celebration?

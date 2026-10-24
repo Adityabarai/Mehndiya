@@ -6,7 +6,7 @@ const router = Router();
 // Helper to generate a pre-formatted WhatsApp chat link
 const generateWhatsAppLink = (booking) => {
   const artistPhone = process.env.ARTIST_WHATSAPP || '919876543210';
-  const text = `✨ *New Appointment Request - Mehndi with Ayushi* ✨\n\n` +
+  const text = `✨ *New Appointment Request - mehndiya* ✨\n\n` +
     `👤 *Client Name:* ${booking.customer_name}\n` +
     `📞 *Phone:* ${booking.phone}\n` +
     `💍 *Service:* ${booking.service_name}\n` +

@@ -60,7 +60,7 @@ export default function Footer({ onNavigate, onOpenBooking }) {
             </div>
             <div>
               <span className="font-serif text-2xl font-bold tracking-tight text-[#F3E5AB]">
-                Mehndi with Ayushi
+                mehndiya
               </span>
               <p className="text-[10px] tracking-widest uppercase font-semibold text-[#D4AF37] font-sans">
                 Boutique Bridal Henna Studio
@@ -186,7 +186,7 @@ export default function Footer({ onNavigate, onOpenBooking }) {
 
       {/* Copyright */}
       <div className="border-t border-white/10 py-6 text-center text-xs text-white/50 font-sans">
-        <p>© 2026 Mehndi with Ayushi. Beautiful Mehndi, Beautiful Moments. All rights reserved.</p>
+        <p>© 2026 mehndiya. Beautiful Mehndi, Beautiful Moments. All rights reserved.</p>
       </div>
     </footer>
   );

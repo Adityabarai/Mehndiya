@@ -88,7 +88,7 @@ export default function Navbar({ onNavigate, currentView, onOpenBooking }) {
       <div className="bg-[#143823] text-[#FAF7F2] px-4 py-2 text-xs font-sans flex flex-wrap items-center justify-between border-b border-[#D4AF37]/30">
         <div className="flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
-          <span className="text-[#F3E5AB] font-medium text-xs sm:text-sm">✨ Mehndi with Ayushi — Handcrafted Organic Bridal & Festive Henna</span>
+          <span className="text-[#F3E5AB] font-medium text-xs sm:text-sm">✨ mehndiya — Handcrafted Organic Bridal & Festive Henna</span>
         </div>
         
         <div className="hidden sm:flex items-center gap-4 text-[#F3E5AB]/90 text-xs">
@@ -119,7 +119,7 @@ export default function Navbar({ onNavigate, currentView, onOpenBooking }) {
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#143823]">
-                Mehndi with Ayushi
+                mehndiya
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
             </div>

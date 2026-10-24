@@ -2,7 +2,7 @@
   "name": "mehndiwithayushi-server",
   "version": "1.0.0",
   "type": "module",
-  "description": "Express Backend & Supabase PostgreSQL API for Mehndi with Ayushi",
+  "description": "Express Backend & Supabase PostgreSQL API for mehndiya",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

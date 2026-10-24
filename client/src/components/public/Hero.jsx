@@ -94,7 +94,7 @@ export default function Hero({ onOpenBooking, onNavigate }) {
                           <h4 className="font-serif font-bold text-sm text-[#143823]">Ayushi Verma</h4>
                           <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
                         </div>
-                        <p className="text-[11px] text-[#7A7369]">Founder & Master Couturier • Mehndi with Ayushi</p>
+                        <p className="text-[11px] text-[#7A7369]">Founder & Master Couturier • mehndiya</p>
                       </div>
                     </div>
                     <div className="text-right">

@@ -34,7 +34,7 @@ export default function Navbar({ onOpenBooking, onToggleAdmin, isAdminOpen }) {
         {/* Brand */}
         <a href="#home" style={{ textDecoration: 'none' }}>
           <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-maroon-dark)', display: 'flex', alignItems: 'center', gap: '0.35rem', letterSpacing: '0.03em' }}>
-            Mehndi with Ayushi <Sparkles size={15} color="var(--color-gold)" />
+            mehndiya <Sparkles size={15} color="var(--color-gold)" />
           </div>
           <div style={{ fontSize: '0.68rem', color: 'var(--color-henna)', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>
             Luxury Bridal Henna Studio

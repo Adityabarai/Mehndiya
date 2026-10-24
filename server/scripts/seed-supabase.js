@@ -75,7 +75,7 @@ async function seed() {
       starting_price: 3500.00,
       profile_image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
       cover_image: 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=1200&q=80',
-      about: 'Ayushi is the founder and master couturier of Mehndi with Ayushi. Combines heritage architectural jharokhas with contemporary botanical elegance using 100% triple-sifted organic Sojat henna paste.',
+      about: 'Ayushi is the founder and master couturier of mehndiya. Combines heritage architectural jharokhas with contemporary botanical elegance using 100% triple-sifted organic Sojat henna paste.',
       verified: true,
       approval_status: 'approved',
       active: true,

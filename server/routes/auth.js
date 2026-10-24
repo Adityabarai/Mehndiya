@@ -159,11 +159,11 @@ router.post('/login', async (req, res) => {
       .maybeSingle();
 
     if (userErr || !user) {
-      return res.status(401).json({ success: false, error: 'Invalid email or password' });
+      return res.status(401).json({ success: false, error: 'User is not registered. Please create an account / register first to login.' });
     }
 
     if (user.password !== password) {
-      return res.status(401).json({ success: false, error: 'Invalid email or password' });
+      return res.status(401).json({ success: false, error: 'Incorrect password. Please verify and try again.' });
     }
 
     if (user.status === 'inactive' || user.status === 'suspended') {

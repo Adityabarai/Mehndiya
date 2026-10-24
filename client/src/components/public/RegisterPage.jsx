@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Sparkles, User, Palette, Mail, Phone, Lock, MapPin, ArrowRight, ShieldAlert } from 'lucide-react';
+import { Sparkles, User, Palette, Mail, Phone, Lock, Eye, EyeOff, MapPin, ArrowRight, ShieldAlert, AlertCircle, Check } from 'lucide-react';
 
 export default function RegisterPage({ onNavigate }) {
   const [role, setRole] = useState('USER'); // 'USER' or 'ARTIST'
@@ -8,6 +8,10 @@ export default function RegisterPage({ onNavigate }) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
   
   // Artist specific fields (Prompt item 24)
   const [location, setLocation] = useState('Mumbai');
@@ -22,6 +26,23 @@ export default function RegisterPage({ onNavigate }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
+
+    if (!name || !email || !phone || !password || !confirmPassword) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match. Please verify and try again.');
+      return;
+    }
+
     setLoading(true);
 
     const payload = {
@@ -47,6 +68,8 @@ export default function RegisterPage({ onNavigate }) {
       } else {
         onNavigate('user-dashboard');
       }
+    } else {
+      setError(res.error || 'Registration failed. Please try again.');
     }
   };
 
@@ -100,6 +123,14 @@ export default function RegisterPage({ onNavigate }) {
           </div>
         )}
 
+        {/* Error Alert */}
+        {error && (
+          <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-center gap-2 font-medium animate-fadeIn">
+            <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
         <form onSubmit={handleRegister} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -109,7 +140,10 @@ export default function RegisterPage({ onNavigate }) {
               <input
                 type="text"
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onChange={e => {
+                  setName(e.target.value);
+                  if (error) setError('');
+                }}
                 required
                 placeholder="e.g. Priya Sharma"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8DFC8] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 bg-[#FAF7F2]"
@@ -123,7 +157,10 @@ export default function RegisterPage({ onNavigate }) {
               <input
                 type="tel"
                 value={phone}
-                onChange={e => setPhone(e.target.value)}
+                onChange={e => {
+                  setPhone(e.target.value);
+                  if (error) setError('');
+                }}
                 required
                 placeholder="+91 98765 43210"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8DFC8] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 bg-[#FAF7F2]"
@@ -131,33 +168,93 @@ export default function RegisterPage({ onNavigate }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-[#143823] uppercase tracking-wider mb-1">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-                placeholder="name@example.com"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8DFC8] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 bg-[#FAF7F2]"
-              />
-            </div>
+          <div>
+            <label className="block text-xs font-bold text-[#143823] uppercase tracking-wider mb-1">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => {
+                setEmail(e.target.value);
+                if (error) setError('');
+              }}
+              required
+              placeholder="name@example.com"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8DFC8] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 bg-[#FAF7F2]"
+            />
+          </div>
 
+          {/* Password & Confirm Password Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-[#143823] uppercase tracking-wider mb-1">
                 Password *
               </label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8DFC8] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 bg-[#FAF7F2]"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={e => {
+                    setPassword(e.target.value);
+                    if (error) setError('');
+                  }}
+                  required
+                  placeholder="At least 6 characters"
+                  className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-[#E8DFC8] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 bg-[#FAF7F2]"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8C8479] hover:text-[#143823] transition-colors"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-[#143823] uppercase tracking-wider mb-1">
+                Confirm Password *
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={e => {
+                    setConfirmPassword(e.target.value);
+                    if (error) setError('');
+                  }}
+                  required
+                  placeholder="Re-enter password"
+                  className={`w-full pl-3.5 pr-10 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 bg-[#FAF7F2] ${
+                    confirmPassword && password !== confirmPassword
+                      ? 'border-red-300 focus:ring-red-200'
+                      : confirmPassword && password === confirmPassword
+                      ? 'border-emerald-400 focus:ring-emerald-200'
+                      : 'border-[#E8DFC8] focus:ring-[#D4AF37]/40'
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8C8479] hover:text-[#143823] transition-colors"
+                  tabIndex={-1}
+                >
+                  {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {confirmPassword && password !== confirmPassword && (
+                <p className="text-[11px] text-red-600 mt-1 font-medium">
+                  Passwords do not match
+                </p>
+              )}
+              {confirmPassword && password === confirmPassword && (
+                <p className="text-[11px] text-emerald-700 mt-1 font-medium flex items-center gap-1">
+                  <Check className="w-3 h-3" /> Passwords match
+                </p>
+              )}
             </div>
           </div>
 
@@ -236,7 +333,7 @@ export default function RegisterPage({ onNavigate }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-[#143823] hover:bg-[#1C4B30] text-[#F3E5AB] font-bold text-sm shadow-md shadow-[#143823]/20 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+            className="w-full py-3.5 rounded-xl bg-[#143823] hover:bg-[#1C4B30] text-[#F3E5AB] font-bold text-sm shadow-md shadow-[#143823]/20 flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
           >
             {loading ? 'Registering...' : (role === 'ARTIST' ? 'Submit Artist Application' : 'Register Customer Account')}
             <ArrowRight className="w-4 h-4" />
@@ -246,10 +343,11 @@ export default function RegisterPage({ onNavigate }) {
         <div className="text-center pt-2 text-xs text-[#7A7369]">
           Already have an account?{' '}
           <button
+            type="button"
             onClick={() => onNavigate('login')}
             className="text-[#143823] font-bold hover:underline"
           >
-            Sign In here
+            Sign In Here
           </button>
         </div>
       </div>

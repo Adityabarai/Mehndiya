@@ -59,6 +59,14 @@ router.post('/', async (req, res) => {
       paymentMethod
     } = req.body;
 
+    // Authentication required - only logged-in users can send booking requests
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        error: 'Authentication required. Please sign in or create an account to send a booking request.'
+      });
+    }
+
     // Validate Required Fields
     if (!userName || !userPhone || !artistId || !serviceId || !date || !timeSlot) {
       return res.status(400).json({

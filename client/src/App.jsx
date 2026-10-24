@@ -173,6 +173,7 @@ function MainApp() {
           preselectedService={preselectedService}
           preselectedArtist={preselectedArtist}
           initialParams={initialBookingParams}
+          onNavigate={handleNavigate}
         />
       </UserLayout>
     );
@@ -304,6 +305,7 @@ function MainApp() {
         preselectedService={preselectedService}
         preselectedArtist={preselectedArtist}
         initialParams={initialBookingParams}
+        onNavigate={handleNavigate}
       />
     </div>
   );
