@@ -1,4 +1,12 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = (() => {
+  const host = window.location.hostname;
+  // Production: deployed on Vercel or Render
+  if (host.includes('vercel.app') || host.includes('onrender.com') || host.includes('mehndiya')) {
+    return 'https://mehndiya.onrender.com/api';
+  }
+  // Local development
+  return 'http://localhost:5000/api';
+})();
 
 const getHeaders = () => {
   const token = localStorage.getItem('mehndi_token');
